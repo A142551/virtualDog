@@ -1,7 +1,18 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe('my first test', ()=>{
-  it('my first expectation', ()=>{
-    expect(true).toBeTruthy('What? Why was true not truthy?');
+describe('In the file masterController.ts', () => {
+  describe('the masterController\'s', () => {
+    describe('constructor', () => {
+
+    });
+    describe('throwSomething method', () => {
+
+    });
+    describe('feedTheDog method', () => {
+
+    });
+  });
+  describe('the MasterAction object\'s constructor', () => {
+
   });
 });
