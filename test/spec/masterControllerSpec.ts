@@ -68,15 +68,28 @@ describe('In the file masterController.ts', () => {
         expect(sut.masterObjects[5].name).toEqual('table scraps');
       });
     });
-    describe('throwSomething method', () => {
-      it('should broadcast the throw event name', () => {
-        pending('finish in mocking module');
-      })
-    });
-    describe('feedTheDog method', () => {
-      it('should broadcase the feed event name', () => {
-        pending('finish in mocking module');
-      })
+    describe('broadcast related property', () => {
+      let broadcastObject: vdog.DogObject;
+      beforeEach(() => {
+        broadcastObject = new vdog.DogObject('meh', false, false);
+        spyOn($rootScope, '$broadcast');
+      });
+      describe('throwSomething', () => {
+        it('should broadcast the throw event name and the object thrown', () => {
+          sut.throwSomething(broadcastObject);
+          expect($rootScope.$broadcast).toHaveBeenCalledWith(
+            vdog.eventNames.masterThrow, broadcastObject
+          );
+        })
+      });
+      describe('feedTheDog', () => {
+        it('should broadcast the feed event name and the object thrown', () => {
+          sut.feedTheDog(broadcastObject);
+          expect($rootScope.$broadcast).toHaveBeenCalledWith(
+            vdog.eventNames.masterFeed, broadcastObject
+          );
+        })
+      });
     });
   });
   describe('the MasterAction\'s constructor', () => {
