@@ -230,7 +230,25 @@ namespace dogsrus.virtdogtest {
         describe('when thrown object chewOn returns squeaky', () => {
           beforeEach(() => {
             (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(vdog.ChewExperience.squeaky)
-          })
+          });
+          it('should blog squeak', () => {
+            $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+            expect(sut.blogContent).toContain('squeak');
+          });
+          it('should call chewOn squeakyOcdChewCount+1 times', () => {
+            sut.squeakyOcdChewCount = 5;
+            $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+            expect(throwObject.chewOn).toHaveBeenCalledTimes(sut.squeakyOcdChewCount + 1);
+          });
+          it('then chewOn stops returning squeaky should blog \'try again\'', () => {
+            (<jasmine.Spy>(throwObject.chewOn)).and.returnValues(
+              vdog.ChewExperience.squeaky,
+              vdog.ChewExperience.great
+            );
+            sut.squeakyOcdChewCount = 1;
+            $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+            expect(sut.blogContent).toContain('try again');
+          });
         });
       });
     });
